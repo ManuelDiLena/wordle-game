@@ -1,6 +1,8 @@
+import Wordle from './components/Wordle';
+
 function App() {
   return (
-    <div>Hello world</div>
+    <Wordle />
   );
 }
 
