@@ -3,6 +3,7 @@ import RowCompleted from "./RowCompleted";
 import RowCurrent from "./RowCurrent";
 import RowEmpty from "./RowEmpty";
 import { GameStatus } from './types';
+import { useWindow } from "../hooks/useWindow";
 
 export default function Wordle() {
 
@@ -12,9 +13,13 @@ export default function Wordle() {
   const [completedWords, setCompletedWords] = useState<string[]>([]);
   const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Playing);
 
+  useWindow('keydown', handleKeyDown);
+
   useEffect(() => {
     setWordOfTheDay('airport')
   })
+
+  function handleKeyDown(event: KeyboardEvent) {}
 
   return (
     <div>
