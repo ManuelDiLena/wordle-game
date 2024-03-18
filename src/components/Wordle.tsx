@@ -22,19 +22,23 @@ export default function Wordle() {
   useWindow('keydown', handleKeyDown);
 
   useEffect(() => {
-    setWordOfTheDay('airport')
+    setWordOfTheDay('AIRPORT')
   })
 
   // Function to validate keyboard events
   function handleKeyDown(event: KeyboardEvent) {
     const letter = event.key.toUpperCase();
 
+    if (gameStatus !== GameStatus.Playing) {
+      return;
+    }
+
     if (event.key === 'Backspace' && currentWord.length > 0) {
       onDelete()
       return;
     }
 
-    if (event.key === 'Enter' && currentWord.length === 5) {
+    if (event.key === 'Enter' && currentWord.length === 7 && turn <= 6) {
       onEnter()
       return;
     }
@@ -86,12 +90,23 @@ export default function Wordle() {
 
   return (
     <div>
-      <RowCompleted word='abolish' solution={wordOfTheDay} />
-      <RowCurrent word={currentWord} />
-      <RowEmpty />
-      <RowEmpty />
-      <RowEmpty />
-      <RowEmpty />
+      {
+        completedWords.map((word, i) => (
+          <RowCompleted word={word} solution={wordOfTheDay} key={i} />
+        ))
+      }
+
+      {
+        gameStatus === GameStatus.Playing ? (
+          <RowCurrent word={currentWord} />
+        ) : null
+      }
+
+      {
+        Array.from(Array(6 - turn)).map((_, i) => (
+          <RowEmpty key={i} />
+        ))
+      }
     </div>
   );
 }
