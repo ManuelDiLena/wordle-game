@@ -4,6 +4,7 @@ import RowCurrent from "./RowCurrent";
 import RowEmpty from "./RowEmpty";
 import { GameStatus } from './types';
 import { useWindow } from "../hooks/useWindow";
+import { getWordOfTheDay, isValidWord } from "../service/request";
 
 export default function Wordle() {
 
@@ -22,8 +23,8 @@ export default function Wordle() {
   useWindow('keydown', handleKeyDown);
 
   useEffect(() => {
-    setWordOfTheDay('AIRPORT')
-  })
+    setWordOfTheDay(getWordOfTheDay())
+  }, [])
 
   // Function to validate keyboard events
   function handleKeyDown(event: KeyboardEvent) {
@@ -38,12 +39,12 @@ export default function Wordle() {
       return;
     }
 
-    if (event.key === 'Enter' && currentWord.length === 7 && turn <= 6) {
+    if (event.key === 'Enter' && currentWord.length === 6 && turn <= 6) {
       onEnter()
       return;
     }
 
-    if (currentWord.length >= 7) {
+    if (currentWord.length >= 6) {
       return;
     }
 
@@ -82,6 +83,10 @@ export default function Wordle() {
     }
 
     // Validate if the word exists
+    if (currentWord.length === 6 && !isValidWord(currentWord)) {
+      alert('Not a valid word')
+      return;
+    }
 
     setCompletedWords([...completedWords, currentWord])
     setTurn(turn + 1)
