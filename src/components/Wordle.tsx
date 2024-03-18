@@ -34,7 +34,8 @@ export default function Wordle() {
       return;
     }
 
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && currentWord.length === 5) {
+      onEnter()
       return;
     }
 
@@ -59,6 +60,28 @@ export default function Wordle() {
   function onDelete() {
     const newWord = currentWord.slice(0, -1)
     setCurrentWord(newWord)
+  }
+
+  // Function when entering in the game
+  function onEnter() {
+    if (currentWord === wordOfTheDay) {
+      // user won
+      setCompletedWords([...completedWords, currentWord])
+      setGameStatus(GameStatus.Won)
+      return;
+    }
+    if (turn === 6) {
+      // lost user
+      setCompletedWords([...completedWords, currentWord])
+      setGameStatus(GameStatus.Lost)
+      return;
+    }
+
+    // Validate if the word exists
+
+    setCompletedWords([...completedWords, currentWord])
+    setTurn(turn + 1)
+    setCurrentWord('')
   }
 
   return (
