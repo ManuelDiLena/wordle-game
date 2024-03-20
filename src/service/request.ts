@@ -4,17 +4,30 @@ function getWords() {
   return WORDS
 }
 
+// Function to get a different word
 export function getWordOfTheDay() {
   const words = getWords()
   const wordOfTheDay = words[randomNumber()]
   return wordOfTheDay.toUpperCase()
 }
 
-export function isValidWord(word: string) {
-  const words = getWords()
-  return words.includes(word.toLowerCase())
+console.log(getWordOfTheDay())
+
+// Function to validate that it is an existing word
+export async function isValidWord(word: string) {
+  try {
+    const URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/' + word;
+    const response = await fetch(URL)
+    if (response.status !== 200) throw new Error('Request failed')
+    const json = await response.json()
+
+    return json.length
+  } catch (e) {
+    console.log(e)
+    return false
+  }
 }
 
 function randomNumber() {
-  return Math.floor(Math.random() * 69)
+  return Math.floor(Math.random() * 80)
 }

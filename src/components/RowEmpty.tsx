@@ -5,7 +5,7 @@ export default function RowEmpty() {
   return (
     <div className={styles.row}>
       {
-        Array.from(Array(6)).map((_, i) => (
+        Array.from(Array(5)).map((_, i) => (
           <Box key={i} value='' status='empty' />
         ))
       }

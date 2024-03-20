@@ -4,7 +4,7 @@ import RowCurrent from "./RowCurrent";
 import RowEmpty from "./RowEmpty";
 import { GameStatus } from './types';
 import { useWindow } from "../hooks/useWindow";
-import { getWordOfTheDay, isValidWord } from "../service/request";
+import { getWordOfTheDay, isValidWord } from '../service/request'
 import styles from './wordle.module.scss';
 import Keyboard from "./Keyboard";
 import Modal from "./Modal";
@@ -46,12 +46,12 @@ export default function Wordle() {
       return;
     }
 
-    if (key === 'ENTER' && currentWord.length === 6 && turn <= 6) {
+    if (key === 'ENTER' && currentWord.length === 5 && turn <= 6) {
       onEnter()
       return;
     }
 
-    if (currentWord.length >= 6) {
+    if (currentWord.length >= 5) {
       return;
     }
 
@@ -75,7 +75,7 @@ export default function Wordle() {
   }
 
   // Function when entering in the game
-  function onEnter() {
+  async function onEnter() {
     if (currentWord === wordOfTheDay) {
       // user won
       setCompletedWords([...completedWords, currentWord])
@@ -90,7 +90,9 @@ export default function Wordle() {
     }
 
     // Validate if the word exists
-    if (currentWord.length === 6 && !isValidWord(currentWord)) {
+    const validWord = await isValidWord(currentWord)
+
+    if (currentWord.length === 5 && !validWord) {
       alert('Not a valid word')
       return;
     }

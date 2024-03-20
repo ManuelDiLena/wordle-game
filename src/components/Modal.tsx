@@ -31,7 +31,7 @@ export default function Modal({ type, completedWords, solution }: ModalProps) {
       <div className={styles.puzzleWord}>
         {
           word.split('').map((letter, i) => (
-            <div>{checkLetter(letter, i)}</div>
+            <div key={i}>{checkLetter(letter, i)}</div>
           ))
         }
       </div>

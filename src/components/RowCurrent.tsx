@@ -14,7 +14,7 @@ export default function RowCurrent({ word }: RowCurrentProps) {
         ))
       }
       {
-        Array.from(Array(6 - word.length)).map((letter, i) => (
+        Array.from(Array(5 - word.length)).map((letter, i) => (
           <Box key={i} value={''} status='edit' />
         ))
       }
