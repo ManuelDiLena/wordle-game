@@ -5,6 +5,8 @@ import RowEmpty from "./RowEmpty";
 import { GameStatus } from './types';
 import { useWindow } from "../hooks/useWindow";
 import { getWordOfTheDay, isValidWord } from "../service/request";
+import styles from './wordle.module.scss';
+import Keyboard from "./Keyboard";
 
 export default function Wordle() {
 
@@ -28,18 +30,22 @@ export default function Wordle() {
 
   // Function to validate keyboard events
   function handleKeyDown(event: KeyboardEvent) {
-    const letter = event.key.toUpperCase();
+    const key = event.key.toUpperCase();
 
+    onKeyPressed(key)
+  }
+
+  function onKeyPressed(key: string) {
     if (gameStatus !== GameStatus.Playing) {
       return;
     }
 
-    if (event.key === 'Backspace' && currentWord.length > 0) {
+    if (key === 'BACKSPACE' && currentWord.length > 0) {
       onDelete()
       return;
     }
 
-    if (event.key === 'Enter' && currentWord.length === 6 && turn <= 6) {
+    if (key === 'ENTER' && currentWord.length === 6 && turn <= 6) {
       onEnter()
       return;
     }
@@ -49,8 +55,8 @@ export default function Wordle() {
     }
 
     // Enter the letter of the state
-    if (keys.includes(letter)) {
-      onInput(letter)
+    if (keys.includes(key)) {
+      onInput(key)
       return;
     }
   }
@@ -94,7 +100,8 @@ export default function Wordle() {
   }
 
   return (
-    <div>
+    <>
+    <div className={styles.mainContainer}>
       {
         completedWords.map((word, i) => (
           <RowCompleted word={word} solution={wordOfTheDay} key={i} />
@@ -112,6 +119,10 @@ export default function Wordle() {
           <RowEmpty key={i} />
         ))
       }
+
     </div>
+
+    <Keyboard keys={keys} onKeyPressed={onKeyPressed} />
+    </>
   );
 }

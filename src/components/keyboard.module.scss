@@ -1,0 +1,62 @@
+@mixin keybase {
+  background-color: #FAF3E3;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keyboardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 570px;
+  margin: 10px auto;
+  gap: 5px;
+}
+
+.key {
+  @include keybase;
+  width: 50px;
+  height: 50px;
+}
+
+.emptyKey {
+  width: 25px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.enterKey {
+  @include keybase;
+  width: 80px;
+  height: 50px;
+}
+
+.deleteKey {
+  @include keybase;
+  width: 80px;
+  height: 50px;
+}
+
+.correct {
+  background-color: #1A4D2E;
+  border: #1A4D2E solid 2px;
+  color: #FFF;
+}
+
+.present {
+  background-color: #FF9F29;
+  border: #FF9F29 solid 2px;
+  color: #000;
+}
+
+.absent {
+  background-color: #FAF3E3;
+  border: #FAF3E3 solid 2px;
+  color: #000;
+}
